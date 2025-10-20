@@ -1,0 +1,72 @@
+/* The main container for the page */
+.snippets-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 2rem auto; /* Centers the content */
+    padding: 1rem;
+}
+
+/* This creates the card layout (a grid) */
+.snippet-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem; /* Space between cards */
+}
+
+/* This is the card itself */
+.snippet-card {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease-in-out;
+}
+
+.snippet-card:hover {
+    transform: translateY(-5px); /* Lifts the card on hover */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+}
+
+.snippet-card h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.snippet-card p {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.4;
+}
+
+/* This styles the code block */
+.snippet-card pre {
+    background-color: #f4f4f4; /* Light gray background */
+    border-radius: 4px;
+    padding: 1rem;
+    overflow-x: auto; /* Adds a scrollbar if code is too wide */
+    white-space: pre-wrap; /* Wraps long lines of code */
+}
+
+.snippet-card code {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.85rem;
+    color: #c7254e; /* A common color for code text */
+}
+
+/* This styles the tags */
+.tags-container {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tag {
+    background-color: #e0e7ff; /* Light blue */
+    color: #4338ca; /* Dark blue text */
+    padding: 0.25rem 0.75rem;
+    border-radius: 99px; /* Makes it a pill shape */
+    font-size: 0.75rem;
+    font-weight: 500;
+}
