@@ -1,11 +1,16 @@
 import React from 'react'
-import { useLoaderData } from 'react-router-dom'
+import { useLoaderData, useNavigate } from 'react-router-dom'
 import './Snippets.css'
 
 
 function Snippets() {
     const snips = useLoaderData()
     console.log(snips)
+    const navigate = useNavigate()
+
+    const editSnippet=(id)=>{
+    navigate(`/editSnippet/${id}`)
+  }
 
   return (
     <>
@@ -16,14 +21,11 @@ function Snippets() {
                 
                 {snips && snips.length > 0 ? (
                     
-                    // --- This is the "block way" you chose ---
+                    // the yes path starts_-----------------------------
                     snips.map((snippet) => {
-                        // You now have a "workspace" here to add
-                        // console.logs or other logic if you want.
-                        // console.log("Rendering:", snippet.title);
-
-                        // You MUST use the 'return' keyword
+                        
                         return (
+                            //card starts -----------------------------------------
                             <div className="snippet-card" key={snippet._id}>
                                 
                                 <h3>{snippet.title}</h3>
@@ -37,19 +39,23 @@ function Snippets() {
                                         {snippet.code}
                                     </code>
                                 </pre>
+                                <button onClick={()=>{editSnippet(snippet._id)}}>edit</button>
+                                <p>{snippet._id}</p>
                                 
                                 <div className="tags-container">
                                     {snippet.tags && snippet.tags.map((tag) => (
                                         <span className="tag" key={tag}>{tag}</span>
                                     ))}
                                 </div>
+                                
                             </div>
                         );
                     })
-                    // --- End of the "block way" ---
+                    // --------------- the yes path ends ----------------------------------------
+                    // --- card ends ---
 
                 ) : (
-                    <p>No snippets found.</p>
+                    <p>No snippets found.</p>//the no path
                 )}
 
             </div>

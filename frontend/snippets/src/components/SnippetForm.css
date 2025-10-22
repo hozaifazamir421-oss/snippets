@@ -1,0 +1,70 @@
+.snippet-form {
+  max-width: 700px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background-color: #1e1e2f; /* dark dev-friendly background */
+  border-radius: 1rem;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  color: #f5f5f5;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.snippet-form label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+  color: #cfd6f0;
+}
+
+.snippet-form input,
+.snippet-form textarea {
+  width: 100%;
+  padding: 0.7rem 0.8rem;
+  margin-bottom: 1.2rem;
+  border-radius: 0.5rem;
+  border: 1px solid #444;
+  background-color: #2a2a3d;
+  color: #f5f5f5;
+  font-size: 1rem;
+  font-family: monospace;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.snippet-form input::placeholder,
+.snippet-form textarea::placeholder {
+  color: #888ea8;
+}
+
+.snippet-form input:focus,
+.snippet-form textarea:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 5px #2563eb66;
+}
+
+.snippet-form textarea {
+  font-family: monospace;
+  resize: vertical;
+}
+
+.snippet-form button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #2563eb;
+  color: #fff;
+  font-weight: 700;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.snippet-form button:hover {
+  background-color: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.snippet-form button:active {
+  transform: translateY(0px);
+}

@@ -4,6 +4,11 @@ import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 import Home from './pages/Home'
 import Layout from './components/Layout'
 import axios from 'axios'
+import AddSnippet from './pages/AddSnippet'
+import EditSnippet from './pages/EditSnippet'
+
+
+
 
 //this gets all the available snippets present in the database.
 const getAllSnippets = async()=>{
@@ -19,10 +24,23 @@ const getAllSnippets = async()=>{
   }
 }
 
+const getOneSnippet = async({params})=>{
+    try{
+      const res = await axios.get(`http://localhost:5000/snippets/${params.id}`)
+      return res.data;
+    }
+    catch(error){
+      console.log(`Error loading the snippet`, error);
+      throw new Error("Could not load snippet from the server")
+    }
+}
+
 
 const router = createBrowserRouter([
   {path: '/', element: <Layout/>, children:[
-    {path: '/', element: <Home/>, loader: getAllSnippets},
+    {index: true, path: '/', element: <Home/>, loader: getAllSnippets},
+    {path: '/addSnippet', element: <AddSnippet/>},
+    {path: '/editSnippet/:id', element: <EditSnippet/>,loader: getOneSnippet},
   ]}
   
 ])

@@ -45,12 +45,14 @@
     border-radius: 4px;
     padding: 1rem;
     overflow-x: auto; /* Adds a scrollbar if code is too wide */
-    white-space: pre-wrap; /* Wraps long lines of code */
+    white-space: pre-wrap; /*Wraps long lines of code*/
 }
 
 .snippet-card code {
     font-family: 'Courier New', Courier, monospace;
     font-size: 0.85rem;
+    /* max-width: 5px;
+    max-height: 5px; */
     color: #c7254e; /* A common color for code text */
 }
 
