@@ -13,7 +13,7 @@ import EditSnippet from './pages/EditSnippet'
 //this gets all the available snippets present in the database.
 const getAllSnippets = async()=>{
   let allSnippets = []
-  try{await axios.get(`http://localhost:5000/snippets`).then(res=>{
+  try{await axios.get(`http://localhost:3000/snippets`).then(res=>{
     allSnippets = res.data
   })
   
@@ -26,7 +26,7 @@ const getAllSnippets = async()=>{
 
 const getOneSnippet = async({params})=>{
     try{
-      const res = await axios.get(`http://localhost:5000/snippets/${params.id}`)
+      const res = await axios.get(`http://localhost:3000/snippets/${params.id}`)
       return res.data;
     }
     catch(error){

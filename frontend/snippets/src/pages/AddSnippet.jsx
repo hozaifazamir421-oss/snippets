@@ -9,7 +9,7 @@ function AddSnippet() {
     // here snippetData came from the SnippetForm component. it is passed to onSubmit which is actually handlecreate.
     const handleCreate = async(snippetData)=>{
         try{
-            await axios.post(`http://localhost:5000/snippets`,snippetData)
+            await axios.post(`http://localhost:3000/snippets`,snippetData)
             navigate('/')
         }
         catch(error){

@@ -1,0 +1,121 @@
+body{
+  margin: 0;
+  padding: 0;
+}
+/* ===============================
+   CodeSnip Club Theme: Electric Blue + Slate Gray
+   =============================== */
+
+:root {
+  /* Core colors */
+  --color-bg: #0F172A;          /* Main background */
+  --color-surface: #1E293B;     /* Card / containers */
+  --color-primary: #3B82F6;     /* Primary accent (buttons, highlights) */
+  --color-primary-hover: #2563EB; 
+  --color-accent: #60A5FA;      /* Lighter blue accents */
+  --color-text: #E2E8F0;        /* Main text */
+  --color-text-muted: #94A3B8;  /* Muted text */
+
+  /* Shadows and borders */
+  --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --border-color: #334155;
+  --radius: 0.75rem;
+}
+
+/* ===============================
+   Global styling (applies everywhere)
+   =============================== */
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  
+  
+background-image:
+    /* Layer 1: The "Glow" (FIXED) */
+    radial-gradient(
+      ellipse 150% 80% at bottom center, /* 1. MOVED to bottom and made wider */
+      rgba(59, 130, 246, 0.2) 0%,      /* 3. MADE stronger (from 0.15 to 0.3) */
+      transparent 80%                 /* 3. MADE wider (fades at 80%) */
+    ),
+
+    /* Layer 2: The Grid (Vertical Lines) (FIXED) */
+    linear-gradient(
+      to right,
+      rgba(51, 65, 85, 0.25) 1px,       /* 2. MADE fainter (from 0.5 to 0.2) */
+      transparent 1px
+    ),
+
+    /* Layer 3: The Grid (Horizontal Lines) (FIXED) */
+    linear-gradient(
+      to bottom,
+      rgba(51, 65, 85, 0.2) 1px,       /* 2. MADE fainter (from 0.5 to 0.2) */
+      transparent 1px
+    );
+
+  /* Set the sizes */
+  background-size:
+    100% 100vh,  /* Glow covers the viewport */
+    30px 30px,   /* Vertical lines repeat every 30px */
+    30px 30px;   /* Horizontal lines repeat every 30px */
+
+  /* Set the repeats */
+  background-repeat:
+    no-repeat,   /* Don't repeat the glow */
+    repeat,      /* Repeat the grid */
+    repeat;      /* Repeat the grid */
+  
+  /* This makes the background stay fixed when you scroll */
+  background-attachment: fixed;
+}
+
+/* ===============================
+   Reusable utility classes
+   =============================== */
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  padding: 1.5rem;
+}
+
+.btn {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s, transform 0.1s;
+  margin: 3px;
+}
+
+.btn:hover {
+  background-color: var(--color-primary-hover);
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.text-muted {
+  color: var(--color-text-muted);
+}
+
+.content-center{
+  display: grid;
+  justify-content: center;
+}

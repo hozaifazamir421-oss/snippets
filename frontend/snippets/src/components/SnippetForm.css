@@ -1,6 +1,6 @@
 .snippet-form {
   max-width: 700px;
-  margin: 3rem auto;
+  margin: 1rem auto;
   padding: 2rem;
   background-color: #1e1e2f; /* dark dev-friendly background */
   border-radius: 1rem;
@@ -28,6 +28,8 @@
   font-size: 1rem;
   font-family: monospace;
   transition: border 0.2s, box-shadow 0.2s;
+
+  box-sizing: border-box;
 }
 
 .snippet-form input::placeholder,

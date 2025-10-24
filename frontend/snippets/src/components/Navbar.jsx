@@ -8,7 +8,7 @@ function Navbar() {
   return (
     <header className="navbar">
       <div className="navbar-logo">
-        <Link to="/">CodeSnip Club</Link>
+        <Link to="/"><img src='logo4.png' width= "40px"></img>CodeSnip Club</Link>
       </div>
       <div className="navbar-links">
         <Link

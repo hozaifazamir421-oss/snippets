@@ -29,7 +29,7 @@ function SnippetForm({onSubmit, initialData = {}}) {
   return (
     <>
     <form onSubmit={handleSubmit} className='snippet-form'>
-      <div>
+      <div >
         <label >Title</label>
         <input 
           name = "title"

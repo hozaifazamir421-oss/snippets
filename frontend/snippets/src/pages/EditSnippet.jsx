@@ -9,7 +9,7 @@ function EditSnippet() {
 
     const handleUpdate = async(snippetData)=>{
         try{
-            await axios.put(`http://localhost:5000/snippets/${snippet._id}`,snippetData);
+            await axios.put(`http://localhost:3000/snippets/${snippet._id}`,snippetData);
             navigate('/')
         } catch(error){
             console.log(`Error Updating Snippet`, error)

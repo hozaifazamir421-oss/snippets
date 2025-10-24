@@ -1,0 +1,44 @@
+/* Apply this class to your main hero section */
+.hero-section {
+  /* This is YOUR base background color */
+  background-color: #0F172A;
+
+  /*
+    This is where the magic happens. We are stacking 3
+    background images (which are actually CSS gradients).
+    The first one is on top.
+  */
+  background-image:
+    /* Layer 1: The "Glow" */
+    radial-gradient(
+      ellipse at top center,
+      rgba(185, 100, 0, 0.15) 0%, /* This is the orange/brown glow */
+      transparent 70%
+    ),
+
+    /* Layer 2: The Grid (Vertical Lines) */
+    linear-gradient(
+      to right,
+      rgba(30, 41, 59, 0.5) 1px, /* Uses your navbar color #1E293B */
+      transparent 1px
+    ),
+
+    /* Layer 3: The Grid (Horizontal Lines) */
+    linear-gradient(
+      to bottom,
+      rgba(30, 41, 59, 0.5) 1px, /* Uses your navbar color #1E293B */
+      transparent 1px
+    );
+
+  /*
+    This controls the size of each background layer.
+    It's very important!
+  */
+  background-size:
+    100% 100%,     /* The glow covers the whole area, no repeat */
+    30px 30px,     /* The vertical lines repeat every 30px */
+    30px 30px;     /* The horizontal lines repeat every 30px */
+
+  /* This ensures the glow doesn't repeat */
+  background-repeat: no-repeat, repeat, repeat;
+}
