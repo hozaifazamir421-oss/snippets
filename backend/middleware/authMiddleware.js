@@ -8,6 +8,7 @@ const User = require('../modals/userSchema')
 
 const verifyAccessToken = async(req, res, next)=>{
     try {
+        console.log("verify funf")
 
         //1) getting token
         const authHeader = req.headers.authorization

@@ -2,11 +2,12 @@
   max-width: 700px;
   margin: 1rem auto;
   padding: 2rem;
-  background-color: #1e1e2f; /* dark dev-friendly background */
-  border-radius: 1rem;
+  background-color: var(--color-surface); /* dark dev-friendly background */
+  border-radius: .5rem;
   box-shadow: 0 8px 20px rgba(0,0,0,0.4);
   color: #f5f5f5;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border: 1px solid var(--border-color);
 }
 
 .snippet-form label {
@@ -22,8 +23,8 @@
   padding: 0.7rem 0.8rem;
   margin-bottom: 1.2rem;
   border-radius: 0.5rem;
-  border: 1px solid #444;
-  background-color: #2a2a3d;
+  border: 1px solid #4444447e;
+  background-color: #0F172A;
   color: #f5f5f5;
   font-size: 1rem;
   font-family: monospace;
@@ -69,4 +70,9 @@
 
 .snippet-form button:active {
   transform: translateY(0px);
+}
+
+.snippet-form title{
+  display: flex;
+  justify-content: center;
 }

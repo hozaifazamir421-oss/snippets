@@ -19,11 +19,6 @@ app.use(cookieParser());
 // app.get('/',(req,res)=>{
 //     res.json({message: "hello"})
 // })
-app.use((req, res, next) => {
-    console.log("Cookie parser has run!");
-    console.log("Cookies available:", req.cookies);
-    next();
-});
 
 app.use('/snippets', snippetRoutes)
 app.use('/auth',authRoutes)

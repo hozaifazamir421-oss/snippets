@@ -115,7 +115,18 @@ background-image:
   color: var(--color-text-muted);
 }
 
-.content-center{
+.home-content{
   display: grid;
   justify-content: center;
+  
 }
+
+h1{
+  display: flex;
+  justify-content: center;
+}
+.form-page-container h1{
+    color: #0073ff;
+    
+}
+

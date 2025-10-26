@@ -16,7 +16,7 @@ function Home() {
     <>
     {/* home
     <button onClick={addSnippet}>add Snippets</button> */}
-    <div className='content-center'>
+    <div className='home-content'>
 
     <h1>Your team's Code Snippets library!</h1>
       <p>Why write repetitive code when you can copy.</p>

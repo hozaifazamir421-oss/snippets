@@ -114,14 +114,14 @@ const loginUser = async(req,res)=>{
         })
         //7)sending access token and user
         return res.status(200).json({
-      message: "Login successful",
-      accessToken,
-      user: {
-        id: user._id,
-        username: user.username,
-        email: user.email,
-      },
-    });
+            message: "Login successful",
+            accessToken,
+            user: {
+                id: user._id,
+                username: user.username,
+                email: user.email,
+            },
+        });
 
 
         
