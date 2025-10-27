@@ -6,6 +6,10 @@ import Layout from './components/Layout'
 import axios from 'axios'
 import AddSnippet from './pages/AddSnippet'
 import EditSnippet from './pages/EditSnippet'
+import Register from './pages/Register'
+import Login from './pages/Login'
+import { AuthProvider } from './context/AuthContext'
+import ProtectedRoute from './components/ProtectedRoute'
 
 
 
@@ -39,8 +43,10 @@ const getOneSnippet = async({params})=>{
 const router = createBrowserRouter([
   {path: '/', element: <Layout/>, children:[
     {index: true, path: '/', element: <Home/>, loader: getAllSnippets},
-    {path: '/addSnippet', element: <AddSnippet/>},
+    {path: '/addSnippet', element:(<AddSnippet/> )},
     {path: '/editSnippet/:id', element: <EditSnippet/>,loader: getOneSnippet},
+    {path: '/register', element: <Register/>},
+    {path: '/login', element: <Login/>},
   ]}
   
 ])
@@ -49,7 +55,9 @@ function App() {
 
   return (
     <>
+    <AuthProvider>
     <RouterProvider  router = {router}></RouterProvider>
+    </AuthProvider>
     </>
   )
 }

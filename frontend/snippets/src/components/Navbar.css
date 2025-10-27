@@ -46,3 +46,20 @@
   background-color: var(--color-bg)
   
 }
+.username {
+  margin-left: 10px;
+  font-weight: bold;
+  color: #ccc;
+}
+.navbar button {
+  background: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  
+}
+.navbar button:hover{
+  background-color: #1d205e;
+}

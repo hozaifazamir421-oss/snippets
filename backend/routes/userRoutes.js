@@ -9,7 +9,7 @@ router.post('/register',registerUser)
 router.post('/login', loginUser)
 
 //protected route(loggedin verification through middleware)
-router.post('/logout', verifyAccessToken, logoutUser)
+router.post('/logout',  logoutUser)
 router.post('/refresh-token', refreshAccessToken)
 
 module.exports = router

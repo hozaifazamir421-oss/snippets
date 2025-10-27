@@ -77,7 +77,7 @@ const loginUser = async(req,res)=>{
         //1) getting email and password
         const {username, email, password} = req.body
         console.log(username, email)
-        if(!(username || email)){
+        if(!(username || email|| password)){
             return res.status(400).json({ 
                 message: "Please provide username, email, and password" 
             });
@@ -109,7 +109,7 @@ const loginUser = async(req,res)=>{
         res.cookie("refreshToken", refreshToken,{
             httpOnly : true,
             secure: process.env.NODE_ENV === "production",
-            sameSite: "strict",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
             maxAge: ms(process.env.REFRESH_TOKEN_EXPIRY), // 7 day
         })
         //7)sending access token and user
@@ -156,7 +156,7 @@ const logoutUser= async(req,res)=>{
         res.clearCookie("refreshToken", refreshToken,{
             httpOnly: true,
             secure : process.env.NODE_ENV === "production",
-            sameSite: "strict",
+            sameSite: "none",
         })
 
         //4) send the response of successful logout.
@@ -194,7 +194,7 @@ const refreshAccessToken = async(req,res)=>{
         const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET_KEY)
 
         //4)generate new access token
-        const user = await User.findById(decoded.id)
+        const user = await User.findById(decoded.id).select("-password")
         if(!user){
             return res.status(404).json({message: "User not found"})
         }
@@ -203,7 +203,12 @@ const refreshAccessToken = async(req,res)=>{
 
         //5)sending new access token 
         return res.status(200).json({
-            accessToken: newAccessToken
+            accessToken: newAccessToken,
+            user: {
+                email: user.email,
+                username: user.username,
+                id: user._id,
+            }
         })
         
     } catch (error) {

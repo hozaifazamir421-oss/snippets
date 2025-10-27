@@ -1,0 +1,105 @@
+/* Import this file into Login.jsx and Register.jsx */
+
+/* Main container for the form (uses card styling) */
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 450px; /* Slightly wider */
+  margin: 5rem auto; /* More space from navbar */
+  padding: 2.5rem;
+  background-color: var(--color-surface); /* Themed background */
+  border-radius: var(--radius); /* Themed radius */
+  box-shadow: var(--shadow-soft); /* Themed shadow */
+  border: 1px solid var(--border-color); /* Themed border */
+}
+
+/* Form title */
+.auth-container h2 {
+  margin: 0 0 2rem 0; /* More space below title */
+  color: var(--color-text); /* Themed text */
+  font-size: 2.2rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* The form itself */
+.auth-container form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1.2rem; /* Increased space between form elements */
+}
+
+/* Input fields */
+.auth-container input[type="text"],
+.auth-container input[type="email"],
+.auth-container input[type="password"] {
+  width: 100%;
+  padding: 14px 16px; /* Slightly larger padding */
+  font-size: 1rem;
+  background-color: var(--color-bg); /* Match main background */
+  color: var(--color-text); /* Themed text */
+  border: 1px solid var(--border-color); /* Themed border */
+  border-radius: calc(var(--radius) * 0.7); /* Slightly smaller radius */
+  box-sizing: border-box;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Style for when user clicks into an input */
+.auth-container input:focus {
+  outline: none;
+  border-color: var(--color-primary); /* Themed highlight */
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3); /* Using primary color */
+}
+
+/* Submit button */
+.auth-container button[type="submit"] {
+  width: 100%;
+  padding: 16px; /* Larger button */
+  font-size: 1.1rem; /* Slightly larger font */
+  font-weight: 700;
+  color: #fff;
+  background-color: var(--color-primary); /* Themed primary */
+  border: none;
+  border-radius: calc(var(--radius) * 0.7);
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.1s;
+  margin-top: 0.8rem;
+}
+
+.auth-container button:hover {
+  background-color: var(--color-primary-hover); /* Themed hover */
+}
+
+.auth-container button:disabled {
+  background-color: #555; /* Darker gray when disabled */
+  cursor: not-allowed;
+}
+
+.auth-container button:active {
+  transform: scale(0.98); /* Slightly more pronounced click effect */
+}
+
+/* --- Error Message Styling --- */
+
+/* Let's define an error color that works on the dark theme */
+:root {
+  --color-error: #f87171; /* Light red for dark backgrounds */
+}
+
+/* 1. Field validation errors (from react-hook-form) */
+.auth-container form p {
+  color: var(--color-error); /* Use error color */
+  font-size: 0.875rem;
+  margin: -12px 0 0 5px; /* Adjust spacing */
+}
+
+/* 2. Main server error (from useState) */
+.auth-container > p {
+  color: var(--color-error); /* Use error color */
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  margin-top: 1.5rem;
+}

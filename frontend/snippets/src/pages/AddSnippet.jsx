@@ -2,14 +2,20 @@ import React from 'react'
 import SnippetForm from '../components/SnippetForm'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 
 
 function AddSnippet() {
     const navigate = useNavigate()
+    const {accessToken} = useAuth()
     // here snippetData came from the SnippetForm component. it is passed to onSubmit which is actually handlecreate.
     const handleCreate = async(snippetData)=>{
         try{
-            await axios.post(`http://localhost:3000/snippets`,snippetData)
+            await axios.post(`http://localhost:3000/snippets`,snippetData,{
+                headers:{
+                    Authorization: `Bearer ${accessToken}`
+                }
+            })
             navigate('/')
         }
         catch(error){
