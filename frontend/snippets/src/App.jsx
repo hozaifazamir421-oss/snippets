@@ -43,7 +43,7 @@ const getOneSnippet = async({params})=>{
 const router = createBrowserRouter([
   {path: '/', element: <Layout/>, children:[
     {index: true, path: '/', element: <Home/>, loader: getAllSnippets},
-    {path: '/addSnippet', element:(<AddSnippet/> )},
+    {path: '/addSnippet', element:(<ProtectedRoute><AddSnippet/> </ProtectedRoute>)},
     {path: '/editSnippet/:id', element: <EditSnippet/>,loader: getOneSnippet},
     {path: '/register', element: <Register/>},
     {path: '/login', element: <Login/>},

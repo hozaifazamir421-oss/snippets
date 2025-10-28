@@ -1,5 +1,5 @@
 import React, {  createContext, useState } from 'react'
-import api from '../api/axios'
+import api,{injectStore} from '../api/axios'
 import { useEffect } from 'react'
 import { useContext } from 'react'
 
@@ -31,8 +31,12 @@ export const AuthProvider = ({children})=>{
     }
 
     useEffect(()=>{
+      injectStore({ accessToken, setAccessToken, setUser, logout });
       refreshAccessToken()
     },[])
+    // useEffect(()=>{
+    //   injectStore({ accessToken, setAccessToken, setUser, logout });
+    // },[accessToken])
 
 
     const login = async(credentials)=>{
