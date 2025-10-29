@@ -12,7 +12,7 @@ function AddSnippet() {
     // here snippetData came from the SnippetForm component. it is passed to onSubmit which is actually handlecreate.
     const handleCreate = async(snippetData)=>{
         try{
-            await api.post(`http://localhost:3000/snippets`,snippetData,{
+            await api.post(`/snippets`,snippetData,{
                 headers:{
                     Authorization: `Bearer ${accessToken}`
                 }
