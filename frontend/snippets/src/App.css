@@ -129,4 +129,156 @@ h1{
     color: #0073ff;
     
 }
+/* //----------------------------------------------- */
 
+/* ===============================
+   Mobile Responsiveness (Phones)
+   Applies when screen width is 600px or less
+   =============================== */
+@media (max-width: 600px) {
+
+  /* --- Layout Adjustments --- */
+  
+  /* Allow main content container to use more screen width */
+  .container { /* If you have a main container class */
+    width: 95%; /* Use more width */
+    padding-left: 0.8rem; /* Slightly reduce padding */
+    padding-right: 0.8rem;
+  }
+
+  /* Reduce overall font size slightly */
+  body {
+    font-size: 14px; /* Smaller base font size for phones */
+  }
+
+  h1 {
+    font-size: 1.6rem; /* Smaller main headings */
+  }
+  
+  h2 {
+    font-size: 1.4rem;
+  }
+  
+  h3 {
+     font-size: 1.1rem;
+  }
+
+  /* --- Navbar Adjustments --- */
+  
+  /* Example: Make navbar items stack */
+  .navbar { /* Adjust selector for your navbar */
+    padding: 0.6rem 0.8rem;
+    flex-direction: column; 
+    align-items: flex-start;
+  }
+  
+  .navbar .nav-links { /* Adjust selector for links container */
+     margin-top: 0.4rem;
+     display: flex;
+     flex-direction: column; /* Stack links */
+     gap: 0.4rem;
+     width: 100%; /* Make link container full width */
+  }
+
+  .navbar .nav-button, /* Target links/buttons in navbar */
+  .navbar a { 
+     padding: 0.4rem 0; 
+     width: 100%; 
+     text-align: left;
+  }
+
+  /* --- Snippet List Adjustments --- */
+  
+  .snippet-list {
+    /* Ensure single column */
+    grid-template-columns: 1fr; 
+    gap: 0.8rem; /* Further reduce gap between cards */
+  }
+
+  .snippet-card {
+    padding: 0.8rem; /* Reduce padding inside cards */
+  }
+    
+  .snippet-card .tags-container {
+      margin-bottom: 0.6rem;
+      flex-wrap: wrap; /* Allow tags to wrap */
+      gap: 0.3rem;
+  }
+  
+  .tag {
+     font-size: 0.75rem; /* Smaller tags */
+     padding: 0.2rem 0.4rem;
+  }
+  
+  /* --- Button Adjustments --- */
+  
+  .btn, 
+  .delete-btn { 
+     padding: 0.4rem 0.8rem; 
+     font-size: 0.85rem;
+  }
+  
+  .snippet-actions { 
+      margin-top: 0.6rem;
+      gap: 0.4rem;
+  }
+
+  /* --- Form Adjustments (Add/Edit Snippet) --- */
+  
+  .snippet-form .form-group { 
+     margin-bottom: 0.7rem;
+  }
+    
+  .snippet-form input[type="text"],
+  .snippet-form textarea {
+     padding: 9px 11px;
+     font-size: 0.9rem;
+  }
+  
+  .snippet-form textarea {
+     min-height: 120px; 
+  }
+  
+  .snippet-form button[type="submit"] {
+      padding: 11px;
+      font-size: 0.95rem;
+  }
+
+  /* --- Auth Form Adjustments --- */
+  /* These styles were already targeted for max-width: 600px */
+   .auth-container {
+     margin: 1.5rem 0.8rem; 
+     padding: 1.2rem; 
+     max-width: none; 
+     width: auto; 
+     box-shadow: none; 
+     border: none; 
+     background-color: transparent; 
+   }
+
+   .auth-container h2 {
+     font-size: 1.6rem; 
+     margin-bottom: 1.2rem;
+   }
+   
+   .auth-container input[type="text"],
+   .auth-container input[type="email"],
+   .auth-container input[type="password"] {
+       padding: 11px 13px;
+       font-size: 0.9rem;
+   }
+
+   .auth-container button[type="submit"] {
+       padding: 13px;
+       font-size: 0.95rem;
+   }
+   
+   .auth-container form p {
+       font-size: 0.75rem;
+   }
+
+   .auth-container > p {
+       font-size: 0.85rem;
+       margin-top: 0.8rem;
+   }
+}
