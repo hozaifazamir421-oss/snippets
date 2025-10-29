@@ -36,12 +36,20 @@ function Navbar() {
         >
           Add Snippet
         </Link>
+        
+
         {!user?(<>
               <Link to= "/login">Login</Link>
               <Link to = '/register' >Register</Link>
             </>
             ):(// if user is logged in.
             <>
+              <Link
+                to="/mySnippets"
+                className={location.pathname === '/mySnippets' ? 'active' : ''}
+              >
+                My snipppets
+              </Link>
               <button onClick={handleLogout}>Logout</button>
               <span className="username">👤 {user.username}</span>
 

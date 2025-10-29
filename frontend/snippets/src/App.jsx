@@ -10,6 +10,7 @@ import Register from './pages/Register'
 import Login from './pages/Login'
 import { AuthProvider } from './context/AuthContext'
 import ProtectedRoute from './components/ProtectedRoute'
+import Mysnippets from './pages/Mysnippets'
 
 
 
@@ -47,6 +48,7 @@ const router = createBrowserRouter([
     {path: '/editSnippet/:id', element: <EditSnippet/>,loader: getOneSnippet},
     {path: '/register', element: <Register/>},
     {path: '/login', element: <Login/>},
+    {path: '/mySnippets', element:<ProtectedRoute><Mysnippets/></ProtectedRoute> },
   ]}
   
 ])

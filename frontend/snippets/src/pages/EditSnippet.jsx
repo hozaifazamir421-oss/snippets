@@ -2,6 +2,7 @@ import axios from 'axios'
 import React from 'react'
 import { useLoaderData, useNavigate } from 'react-router-dom'
 import SnippetForm from '../components/SnippetForm'
+import api from '../api/axios'
 
 function EditSnippet() {
     const navigate = useNavigate()
@@ -9,7 +10,7 @@ function EditSnippet() {
 
     const handleUpdate = async(snippetData)=>{
         try{
-            await axios.put(`http://localhost:3000/snippets/${snippet._id}`,snippetData);
+            await api.put(`/snippets/${snippet._id}`,snippetData);
             navigate('/')
         } catch(error){
             console.log(`Error Updating Snippet`, error)

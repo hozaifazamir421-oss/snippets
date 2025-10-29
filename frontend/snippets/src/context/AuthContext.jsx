@@ -31,12 +31,12 @@ export const AuthProvider = ({children})=>{
     }
 
     useEffect(()=>{
-      injectStore({ accessToken, setAccessToken, setUser, logout });
+      // injectStore({ accessToken, setAccessToken, setUser, logout });
       refreshAccessToken()
     },[])
-    // useEffect(()=>{
-    //   injectStore({ accessToken, setAccessToken, setUser, logout });
-    // },[accessToken])
+    useEffect(()=>{
+      injectStore({ accessToken, setAccessToken, setUser, logout });
+    },[accessToken])
 
 
     const login = async(credentials)=>{
