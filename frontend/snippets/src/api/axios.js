@@ -2,6 +2,7 @@
 import axios from 'axios';
 
 let store; // this will hold a reference to your AuthContext functions
+const baseURL = import.meta.env.VITE_API_URL
 
 export const injectStore = (_store) => {
   store = _store;
@@ -39,7 +40,7 @@ api.interceptors.response.use(
 
       try {
         const res = await axios.post(
-          'http://localhost:3000/auth/refresh-token',
+          `${baseURL}/auth/refresh-token`,
           {},
           { withCredentials: true }
         );
