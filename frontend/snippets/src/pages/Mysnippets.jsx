@@ -5,12 +5,15 @@ import { useEffect } from 'react'
 
 import ViewCodeModal from '../components/ViewCodeModal'
 import { useAuth } from '../context/AuthContext'
+import {useNavigate} from 'react-router-dom'
+
 
 
 
 function MySnippets() {
     const [snippet, setSnippets] = useState([])
     const [selectedSnippet, setSelectedSnippet] = useState(null)
+    const navigate = useNavigate()
 
     useEffect(() => {
         const getmysnippets = async () => {
