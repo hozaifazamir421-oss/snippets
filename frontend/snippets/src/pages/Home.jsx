@@ -24,6 +24,7 @@ function Home() {
 
     <h1>Your team's Code Snippets library!</h1>
       <p>Why write repetitive code when you can copy.</p>
+      <p>Create, Search, Copy the codes you want.</p>
       
     </div>
     
