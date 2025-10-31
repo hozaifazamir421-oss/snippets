@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useLoaderData, useNavigate } from 'react-router-dom'
+import {  useNavigate } from 'react-router-dom'
 import './Snippets.css'
 import './buttons.css'
 import axios from 'axios'
@@ -9,7 +9,7 @@ import api from '../api/axios'
 
 
 function Snippets() {
-    const [search, setSearch] = useState("");
+    const [search, setSearch] = useState();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     
@@ -19,31 +19,31 @@ function Snippets() {
     const {user} = useAuth()
     
     useEffect(() => {
-        setLoading(true); // Start loading when search term changes
+        setLoading(true); 
         setError(null);
 
         // Set up a timer
         const delayDebounce = setTimeout(async () => {
+            // console.log(`inside the fetching part`)
             try {
                 // Make the API call using the 'api' instance
                 // Pass the search term as a query parameter if it exists
                 const res = await api.get(`/snippets`, { // Use the main GET /snippets route
                     params: search ? { search } : {}, // Axios automatically creates ?search=...
                 });
-                setSnippets(res.data); // Update state with results
+                // console.log(res.data)
+                setSnippets(res.data); 
             } catch (err) {
                 console.error("Error fetching filtered snippets:", err);
-                setError("Failed to load snippets."); // Set error state
-                setSnippets([]); // Clear snippets on error
+                setError("Failed to load snippets."); 
+                setSnippets([]);
             } finally {
-                setLoading(false); // Stop loading
+                setLoading(false); 
             }
         }, 400); // Wait 400ms after the user stops typing
 
-        // Cleanup function: Clear the timer if the user types again before 400ms
-        return () => clearTimeout(delayDebounce);
+        return () => clearTimeout(delayDebounce);//if typed before 400ms,it will reset time to 400
 
-    // This effect re-runs every time the 'search' state changes
     }, [search]);
     
 

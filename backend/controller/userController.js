@@ -106,7 +106,7 @@ const loginUser = async(req,res)=>{
                                 expiresAt: new Date(Date.now() + ms(process.env.REFRESH_TOKEN_EXPIRY)) // 7 days
         })
         //6) sending refresh token in cookie in httpOnly
-        res.cookie("refreshToken", refreshToken,{
+        res.cookie("refreshToken", refreshToken,{ 
             httpOnly : true,
             secure: process.env.NODE_ENV === "production",
             sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",

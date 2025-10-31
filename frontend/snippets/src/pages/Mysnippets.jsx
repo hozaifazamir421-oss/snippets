@@ -14,6 +14,7 @@ function MySnippets() {
     const [snippet, setSnippets] = useState([])
     const [selectedSnippet, setSelectedSnippet] = useState(null)
     const navigate = useNavigate()
+    const {accessToken} = useAuth()
 
     useEffect(() => {
         const getmysnippets = async () => {
@@ -27,7 +28,7 @@ function MySnippets() {
 
         }
         getmysnippets()
-    }, [])
+    }, [accessToken])
 
     const editSnippet = (id) => {
         navigate(`/editSnippet/${id}`)

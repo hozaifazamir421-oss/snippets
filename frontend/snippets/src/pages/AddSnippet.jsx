@@ -1,6 +1,6 @@
 import React from 'react'
 import SnippetForm from '../components/SnippetForm'
-import axios from 'axios'
+
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import api from '../api/axios'
@@ -13,9 +13,6 @@ function AddSnippet() {
     const handleCreate = async(snippetData)=>{
         try{
             await api.post(`/snippets`,snippetData,{
-                headers:{
-                    Authorization: `Bearer ${accessToken}`
-                }
             })
             navigate('/')
         }

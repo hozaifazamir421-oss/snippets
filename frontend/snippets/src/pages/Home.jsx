@@ -12,7 +12,7 @@ function Home() {
   const addSnippet = ()=>{
     navigate('/addSnippet')
   }
-  console.log('current auth state: ', auth)
+  
   
 
   return (

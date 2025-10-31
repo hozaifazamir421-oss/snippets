@@ -8,8 +8,6 @@ const User = require('../modals/userSchema')
 
 const verifyAccessToken = async(req, res, next)=>{
     try {
-        
-
         //1) getting token
         const authHeader = req.headers.authorization
         let token;
@@ -21,14 +19,20 @@ const verifyAccessToken = async(req, res, next)=>{
         if (!token) {
             return res.status(401).json({ message: "Access token missing" });
         }
+        // if(token){
+        //     console.log(`the token is recieved from header.`)
+        // }
 
         //2)verifying the token
         const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET_KEY);
+        //when the verification or the expiration time of accesstoken is reached. the jwtverify throws error.
+        //now since this error is thrown inside a try block, it directly goes to catch block skippin all the
+        //lines below it. the attaching of user to the req. 
 
         //3)attaching user info
         req.user = await User.findById(decoded.id).select("-password")
         if (!req.user) {
-            return res.status(401).json({ message: "Invalid token user" });
+            return res.status(500).json({ message: "Invalid token user" });
         }
 
         //4)moving to next

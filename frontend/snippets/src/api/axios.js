@@ -2,7 +2,9 @@
 import axios from 'axios';
 
 let store; // this will hold a reference to your AuthContext functions
+// console.log(import.meta.env.VITE_API_URL)
 const baseURL = import.meta.env.VITE_API_URL
+// console.log(baseURL)
 
 export const injectStore = (_store) => {
   store = _store;
@@ -30,12 +32,12 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
-    console.log("Interceptor caught error:", error.response?.status, error.config.url); // <-- Add log
+    // console.log("Interceptor caught error:", error.response?.status, error.config.url); 
     const originalRequest = error.config;
 
     // If token expired and we haven't retried yet
     if (error.response?.status === 401 && !originalRequest._retry) {
-        console.log("Attempting refresh...")
+        // console.log("Attempting refresh...")
       originalRequest._retry = true;
 
       try {
@@ -45,13 +47,19 @@ api.interceptors.response.use(
           { withCredentials: true }
         );
 
-        // update AuthContext
+        // update AuthContext after refreshtoken has sent the fresh access token and the user in response.
         store.setAccessToken(res.data.accessToken);
         store.setUser(res.data.user);
 
         // retry original request
         originalRequest.headers['Authorization'] = `Bearer ${res.data.accessToken}`;
-        return api(originalRequest);
+        //we are directly using axios because calling api(axios instande) was actually overwriting the new accesstoken with older.(see word document of errors on the desktop for more)
+        return axios({
+          ...originalRequest,
+          headers:{ ...originalRequest.headers,
+          },
+          withCredentials: true,
+        })
       } catch (refreshError) {
         console.error('Token refresh failed:', refreshError);
         store.logout(); // clear user & redirect if needed
