@@ -2,7 +2,6 @@ import React from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import './Navbar.css'
 import { useAuth } from '../context/AuthContext'
-import { useState } from 'react'
 
 function Navbar() {
   const location = useLocation() // to highlight active link
@@ -19,19 +18,6 @@ function Navbar() {
         console.log("logout failed: " ,error)
       }
   }
-
-  const [open, setOpen] = useState(false);
-
-  // close mobile menu on route change or resize (optional safety)
-  useEffect(() => {
-    const hideOnResize = () => {
-      if (window.innerWidth > 768) setOpen(false);
-    };
-    window.addEventListener("resize", hideOnResize);
-    return () => window.removeEventListener("resize", hideOnResize);
-  }, []);
-
-
   return (
     <header className="navbar">
       <div className="navbar-logo">
@@ -68,28 +54,6 @@ function Navbar() {
               <span className="username">👤 {user.username}</span>
 
               </>)}
-
-               {/* Hamburger button */}
-        <button
-          className={`hamburger ${open ? "is-open" : ""}`}
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-          onClick={() => setOpen((s) => !s)}
-        >
-          <span className="hamburger-box">
-            <span className="hamburger-inner" />
-          </span>
-        </button>
-
-        {/* Mobile menu */}
-        <div className={`mobile-menu ${open ? "show" : ""}`} role="menu">
-          <ul>
-            <li><Link to="/" onClick={() => setOpen(false)}>Home</Link></li>
-            <li><Link to="/addSnippet" onClick={() => setOpen(false)}>Add Snippet</Link></li>
-            <li><Link to="/my-snippets" onClick={() => setOpen(false)}>My Snippets</Link></li>
-            <li><Link to="/about" onClick={() => setOpen(false)}>About</Link></li>
-          </ul>
-        </div>
       </div>
     </header>
   )
