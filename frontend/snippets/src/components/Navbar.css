@@ -63,3 +63,60 @@
 .navbar button:hover{
   background-color: #1d205e;
 }
+
+
+.hamburger {
+  font-size: 1.8rem;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: none;
+}
+
+/* Hide mobile menu initially */
+.mobile-menu {
+  display: none;
+}
+
+
+/* -------- Responsive (mobile) ---------- */
+@media (max-width: 768px) {
+  .navbar-links {
+    display: none; /* hide desktop links */
+  }
+
+  .hamburger {
+    display: block; /* show hamburger */
+  }
+
+  /* Sidebar menu */
+  .mobile-menu {
+    position: fixed;
+    top: 0;
+    left: -250px; /* hidden by default */
+    width: 250px;
+    height: 100vh;
+    background-color: #222;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    transition: left 0.3s ease;
+  }
+
+  .mobile-menu.open {
+    left: 0; /* slide in */
+  }
+
+  .mobile-menu a,
+  .mobile-menu button {
+    color: white;
+    text-decoration: none;
+    padding: 1rem 0;
+    border-bottom: 1px solid #333;
+    background: none;
+    border: none;
+    text-align: left;
+    font-size: 1rem;
+  }
+}
