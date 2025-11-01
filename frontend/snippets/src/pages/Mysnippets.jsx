@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import api from '../api/axios'
 import { useEffect } from 'react'
-
+import "../components/Snippets.css"
 import ViewCodeModal from '../components/ViewCodeModal'
 import { useAuth } from '../context/AuthContext'
 import {useNavigate} from 'react-router-dom'

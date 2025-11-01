@@ -11,7 +11,7 @@ function EditSnippet() {
     const handleUpdate = async(snippetData)=>{
         try{
             await api.put(`/snippets/${snippet._id}`,snippetData);
-            navigate('/')
+            navigate('/mySnippets')
         } catch(error){
             console.log(`Error Updating Snippet`, error)
         }
