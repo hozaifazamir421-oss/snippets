@@ -2,6 +2,7 @@ import React from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import './Navbar.css'
 import { useAuth } from '../context/AuthContext'
+import { useState } from 'react'
 
 function Navbar() {
   const location = useLocation() // to highlight active link
