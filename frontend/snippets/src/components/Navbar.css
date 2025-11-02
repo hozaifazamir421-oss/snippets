@@ -14,8 +14,20 @@
   z-index: 100;
   border-bottom: 1px solid #334155;
   margin: 5px 50px;
-  border-radius: 30px;
+  border-radius: 50px;
   
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+  opacity: 1;
+  transition: opacity 0.3s ease;
 }
 
 .navbar-logo a {
@@ -60,9 +72,7 @@
   cursor: pointer;
   
 }
-.navbar button:hover{
-  background-color: #1d205e;
-}
+
 
 
 .hamburger {
@@ -82,6 +92,12 @@
 
 /* -------- Responsive (mobile) ---------- */
 @media (max-width: 768px) {
+  .navbar{
+    margin: 0px 0px;
+    position:static;
+    border-radius: 0;
+    
+  }
   .navbar-links {
     display: none; /* hide desktop links */
   }
@@ -94,18 +110,21 @@
   .mobile-menu {
     position: fixed;
     top: 0;
-    left: -250px; /* hidden by default */
+    transform: translateX(-130%); /* hidden by default */
     width: 250px;
     height: 100vh;
-    background-color: #222;
+    background-color: #1e293b;
     display: flex;
     flex-direction: column;
     padding: 1rem;
     transition: left 0.3s ease;
+    z-index: 100;
+    
   }
+  
 
   .mobile-menu.open {
-    left: 0; /* slide in */
+    transform: translateX(-29%); /* slide in */
   }
 
   .mobile-menu a,
@@ -116,7 +135,41 @@
     border-bottom: 1px solid #333;
     background: none;
     border: none;
-    text-align: left;
     font-size: 1rem;
+    border-radius: 10px;
+    text-align: center;
   }
+  .mobile-menu .logout:hover{
+    background-color: rgb(104, 20, 20);
+  }
+  .mobile-menu :hover{
+    background-color: #2e304a;
+  }
+  
+  .mobile-menu a.active{
+    background-color: var(--color-bg);
+  }
+   /* small close (X) button */
+  .mobile-menu .close-btn {
+    align-self: flex-end;
+    background: none;
+    border: none;
+    color: #fff;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    padding: 1rem;
+    border-radius: 50%;
+    line-height: 1;
+    transition: background-color 0.2s ease;
+  }
+  .mobile-menu .close-btn:hover{
+    background-color: #2e304a;
+  }
+  
 }

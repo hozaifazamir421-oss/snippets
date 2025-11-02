@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import './Navbar.css'
 import { useAuth } from '../context/AuthContext'
-import { useState } from 'react'
+import { useState , useEffect} from 'react'
 
 function Navbar() {
   const location = useLocation() // to highlight active link
@@ -10,6 +10,9 @@ function Navbar() {
   const navigate = useNavigate()
   
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  useEffect(() => {
+    document.body.style.overflow = isMenuOpen ? 'hidden' : 'auto'
+  }, [isMenuOpen])
 
   const handleLogout = async ()=>{
       try {
@@ -26,16 +29,28 @@ function Navbar() {
         <Link to="/"><img src='/logo4.png' alt = "logo" width= "40px"></img>CodeSnip Club</Link>
       </div>
 
-       {/* ✅ Hamburger button (visible only on mobile) */}
+      {/* Hamburger */}
       <button
         className="hamburger"
         onClick={() => setIsMenuOpen(!isMenuOpen)}
+        aria-label="Toggle menu"
       >
         ☰
       </button>
 
-      {/* ✅ Sidebar menu (only visible when toggled) */}
+      {/* ✅ Dark overlay */}
+      {isMenuOpen && (
+        <div
+          className="overlay"
+          onClick={() => setIsMenuOpen(false)}
+        ></div>
+      )}
+
+      {/* Sidebar */}
       <div className={`mobile-menu ${isMenuOpen ? 'open' : ''}`}>
+        <button className="close-btn" onClick={() => setIsMenuOpen(false)}>
+          ✕
+        </button>
         <Link
           to="/"
           className={location.pathname === '/' ? 'active' : ''}
@@ -65,7 +80,7 @@ function Navbar() {
             >
               My Snippets
             </Link>
-            <button onClick={handleLogout}>Logout</button>
+            <button onClick={handleLogout} className='logout'>Logout</button>
             <span className="username">👤 {user.username}</span>
           </>
         )}

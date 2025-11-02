@@ -130,3 +130,10 @@ h1{
     
 }
 /* //----------------------------------------------- */
+@media (max-width: 768px){
+  .home-content{
+    display: grid;
+    justify-content: center;
+    text-align: center;
+  }
+}
