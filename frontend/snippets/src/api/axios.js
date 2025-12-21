@@ -46,10 +46,12 @@ api.interceptors.response.use(
           {},
           { withCredentials: true }
         );
+        
 
         // update AuthContext after refreshtoken has sent the fresh access token and the user in response.
         store.setAccessToken(res.data.accessToken);
-        store.setUser(res.data.user);
+        // store.setUser(res.data.user);
+        store.setUser(prev => ({...prev, ...res.data.user}))
 
         // retry original request
         originalRequest.headers['Authorization'] = `Bearer ${res.data.accessToken}`;

@@ -1,0 +1,73 @@
+/* AdminUsers.css */
+
+.admin-container {
+  padding: 24px;
+  align-items: center;
+  text-align: center;
+}
+
+.admin-container h2 {
+  margin-bottom: 16px;
+  font-size: 1.5rem;
+  color: #ffffff;
+  text-align: center;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.admin-table thead {
+  background-color: #f4f6f8;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 12px 14px;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.admin-table th {
+  font-weight: 600;
+  color: #333;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.admin-table td {
+  color: #444;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.admin-table tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-table tr:hover {
+  background-color: #fafafa;
+}
+
+.admin-action-btn {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #e53935;
+  color: white;
+  transition: background-color 0.2s ease;
+}
+
+.admin-action-btn:hover {
+  background-color: #c62828;
+}
+
+.admin-action-disabled {
+  color: #999;
+  font-size: 0.85rem;
+}

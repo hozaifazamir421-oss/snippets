@@ -1,3 +1,4 @@
+const { ROLETYPES } = require("../middleware/constants");
 const Snippet  = require("../modals/snippetSchema")
 const asyncHandler = require("express-async-handler")
 
@@ -94,4 +95,21 @@ const deleteSnippet =asyncHandler(async(req,res)=>{
     res.status(200).json({message:"deleted snippet"})
 })
 
-module.exports = { getSnippets, getOneSnippet, createSnippet, editSnippet, deleteSnippet, getMySnippets}
+const adminDeleteSnippet = asyncHandler(async(req,res)=>{
+
+    const snip = await Snippet.findByIdAndDelete(req.params.id);
+    if(!snip){
+        return res.status(404).json({message: "Snippet not found"})
+    }
+    console.log("reached admin delete")
+    return res.status(200).json({message: "Snippet Deleted Successfully."})
+})
+
+module.exports = { getSnippets,
+                    getOneSnippet,
+                    createSnippet,
+                    editSnippet,
+                    deleteSnippet,
+                    getMySnippets,
+                    adminDeleteSnippet,
+                }

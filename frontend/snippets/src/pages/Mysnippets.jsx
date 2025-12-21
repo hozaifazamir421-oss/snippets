@@ -24,6 +24,7 @@ function MySnippets() {
             }
             catch (error) {
                 console.error("Fetch error: ", error)
+                
             }
 
         }

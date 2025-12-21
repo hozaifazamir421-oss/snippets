@@ -40,6 +40,7 @@ const verifyAccessToken = async(req, res, next)=>{
 
         
     } catch (error) {
+        
         console.log("Auth Middleware Error:", error.message)
         return res.status(401).json({message: "Invalid or expired Token"})
 

@@ -11,6 +11,8 @@ import Login from './pages/Login'
 import { AuthProvider } from './context/AuthContext'
 import ProtectedRoute from './components/ProtectedRoute'
 import Mysnippets from './pages/Mysnippets'
+import AdminRoute from './components/AdminRoute'
+import AdminUsers from './pages/AdminUsers'
 
 
 const baseURL = import.meta.env.VITE_API_URL
@@ -49,6 +51,7 @@ const router = createBrowserRouter([
     {path: '/register', element: <Register/>},
     {path: '/login', element: <Login/>},
     {path: '/mySnippets', element:<ProtectedRoute><Mysnippets/></ProtectedRoute> },
+    {path: '/admin/users', element: <AdminRoute><AdminUsers/></AdminRoute>}
   ]}
   
 ])

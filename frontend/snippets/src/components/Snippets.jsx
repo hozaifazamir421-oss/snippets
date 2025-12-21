@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import {  useNavigate } from 'react-router-dom'
+
 import './Snippets.css'
 import './buttons.css'
-import axios from 'axios'
+
 import ViewCodeModal from './ViewCodeModal'
 import { useAuth } from '../context/AuthContext'
 import api from '../api/axios'
@@ -13,10 +13,11 @@ function Snippets() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     
-    const navigate = useNavigate()
+    
     const [snippets, setSnippets] = useState([]);
     const [selectedSnippet, setSelectedSnippet] = useState(null);
     const {user} = useAuth()
+    const isAdmin = user && (user.role === "ADMIN")
     
     useEffect(() => {
         setLoading(true); 
@@ -47,23 +48,21 @@ function Snippets() {
     }, [search]);
     
 
-    // const editSnippet=(id)=>{
-    // navigate(`/editSnippet/${id}`)
-    // }
-
-    // const deleteSnippet =async(id)=>{
-    //     let confirm = window.confirm('Do you want to delete this item?')
-    //     if(!confirm){
-    //         return 
-    //     }
-    //     try{await axios.delete(`http://localhost:3000/snippets/${id}`).then((res)=>{console.log(res)})
-    //     window.alert(`the Snippet is deleted successfully`)
-    //     setSnippets(prev=>prev.filter(snippet=>snippet._id !== id))
-    //     }catch(error){
-    //         console.error('error deleting snippet', error)
-    //         alert(`Failed to delete.`)
-    //     }
-    // }
+    
+    const deleteSnippet = async (id) => {
+        let confirm = window.confirm('Do you want to delete this item?')
+        if (!confirm) {
+            return
+        }
+        try {
+            await api.delete(`/snippets/admin/${id}`).then((res) => { console.log(res) })
+            window.alert(`the Snippet is deleted successfully`)
+            setSnippets(prev => prev.filter(snippet => snippet._id !== id))
+        } catch (error) {
+            console.error('error deleting snippet', error)
+            alert(`Failed to delete.`)
+        }
+    }
 
     const viewSnippet =(snippet)=>{
         setSelectedSnippet(snippet)
@@ -114,7 +113,7 @@ function Snippets() {
                     // the yes path starts_-----------------------------
                     snippets.map((snippet) => {
                         const isOwner = user && (snippet.createdBy === user.id || snippet.createdBy?._id === user.id);
-                        
+                                     
                         return (
                             //card starts -----------------------------------------
                             <div className="snippet-card" key={snippet._id}>
@@ -135,6 +134,10 @@ function Snippets() {
                                 <p>ID: {snippet._id}</p>
                                 <p>created by: {snippet.createdBy?.username}</p>
                                 <button onClick={()=>{viewSnippet(snippet)}} className='btn'>View</button>
+                                
+                                
+                                {isAdmin && (<button onClick={() => { deleteSnippet(snippet._id) }} className='delete-btn'>delete</button>)}
+                                
                                 {/* {isOwner && (<><button onClick={()=>{editSnippet(snippet._id)}} className='btn'>edit</button>
                                 <button onClick={()=>{deleteSnippet(snippet._id)}} className='delete-btn'>delete</button></>)} */}
                                 

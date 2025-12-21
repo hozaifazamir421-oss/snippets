@@ -8,6 +8,7 @@ function Navbar() {
   const location = useLocation() // to highlight active link
   const {user, logout} = useAuth()
   const navigate = useNavigate()
+  const isAdmin = user && (user.role === "ADMIN")
   
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   useEffect(() => {
@@ -80,6 +81,13 @@ function Navbar() {
             >
               My Snippets
             </Link>
+            <Link 
+             to='/admin/users'
+             className= {location.pathname === '/admin/users' ? 'active' : ''}
+             onClick={()=>setIsMenuOpen(false)}
+            >
+              Manage Users
+            </Link>
             <button onClick={handleLogout} className='logout'>Logout</button>
             <span className="username">👤 {user.username}</span>
           </>
@@ -115,6 +123,12 @@ function Navbar() {
               >
                 My snipppets
               </Link>
+              {isAdmin && (<> <Link
+                to ="/admin/users"
+                className={location.pathname === '/admin/users' ? 'active' : ''}
+              >
+                Manage Users
+              </Link></>)}
               <button onClick={handleLogout}>Logout</button>
               <span className="username">👤 {user.username}</span>
 

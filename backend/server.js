@@ -26,6 +26,7 @@ app.use(cookieParser());
 app.use('/snippets', snippetRoutes)
 app.use('/auth',authRoutes)
 
+
 app.listen(PORT, (err)=>[
     console.log(`app is listening on ${PORT}`)
 ])

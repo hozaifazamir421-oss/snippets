@@ -2,16 +2,16 @@ import React from 'react'
 import Snippets from '../components/Snippets'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext';
+import User from '../components/AdminRoute';
 
 
 
 function Home() {
-  const navigate = useNavigate();
-  const auth = useAuth()
+  
+  const {user} = useAuth()
+  const isAdmin = user && (user.role === "ADMIN")
 
-  const addSnippet = ()=>{
-    navigate('/addSnippet')
-  }
+  
   
   
 
@@ -30,6 +30,7 @@ function Home() {
     
     
     <Snippets/>
+    {isAdmin && <User/>}
     </>
   )
 }

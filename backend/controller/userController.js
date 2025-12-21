@@ -3,6 +3,9 @@ const RefreshToken = require('../modals/refreshTokenSchema')
 const {generateAccessToken, generateRefreshToken} = require('../utils/tokenUtils')
 const jwt = require('jsonwebtoken')
 const ms = require('ms')
+const asyncHandler = require('express-async-handler')
+const Snippet = require('../modals/snippetSchema')
+
 
 const registerUser = async (req, res)=>{
   /*----1) Get user data (name, email, password) from request body
@@ -54,7 +57,10 @@ const registerUser = async (req, res)=>{
             message: "User Registered successfully",
             tokens:{accessToken},
             user:{
-                id: user._id, username: user.username, email: user.email 
+                id: user._id, 
+                username: user.username, 
+                email: user.email,
+                role: user.role,
             }
         })
 
@@ -120,6 +126,7 @@ const loginUser = async(req,res)=>{
                 id: user._id,
                 username: user.username,
                 email: user.email,
+                role: user.role,
             },
         });
 
@@ -208,14 +215,44 @@ const refreshAccessToken = async(req,res)=>{
                 email: user.email,
                 username: user.username,
                 id: user._id,
+                role: user.role,
             }
         })
         
     } catch (error) {
-        console.log("Refresh Token error", error)
+        console.log("Refresh Token error: ", error)
         return res.status(500).json({message: "Error generating token refresh"})
     }
 }
 
+const getAllUsers = asyncHandler(async(req,res)=>{
+   
+    const users = await User.find().select('-password')
+    if(users.length === 0){
+        return res.status(404).json({message: "No users found!"})
+    }
+    return res.status(200).json({
+        users,
+    })
+})
 
-module.exports = {registerUser, loginUser, logoutUser,refreshAccessToken}
+const deleteUser = asyncHandler(async(req, res)=>{
+    const targetUserId = req.params.id;
+    const user = await User.findById(targetUserId);
+    if (!user) {
+        return res.status(404).json({ message: "User not found" });
+    }
+    //admin should not delete self
+    if (req.user.id === targetUserId) {
+        return res.status(403).json({ message: "Admin cannot delete own account" });
+    }
+    //all associated snippets deleted.
+    await Snippet.deleteMany({ createdBy: targetUserId });
+
+    await User.findByIdAndDelete(req.params.id);
+       
+        return res.status(200).json({message: "User Deleted Successfully."})
+})
+
+
+module.exports = {registerUser, loginUser, logoutUser,refreshAccessToken, getAllUsers, deleteUser}
