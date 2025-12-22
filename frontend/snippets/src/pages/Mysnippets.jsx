@@ -87,9 +87,14 @@ function MySnippets() {
                                     </div>
 
                                     <p>ID: {snippet._id}</p>
+                                    <div>
                                     <button onClick={() => { viewSnippet(snippet) }} className='btn'>View</button>
                                     <button onClick={() => { editSnippet(snippet._id) }} className='btn'>edit</button>
                                     <button onClick={() => { deleteSnippet(snippet._id) }} className='delete-btn'>delete</button>
+                                    <span className={`visibility-badge ${snippet.visibility.toLowerCase()}`}>
+                                    {snippet.visibility}
+                                    </span>
+                                    </div>
 
 
                                 </div>

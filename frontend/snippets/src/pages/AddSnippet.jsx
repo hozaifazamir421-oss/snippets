@@ -2,13 +2,13 @@ import React from 'react'
 import SnippetForm from '../components/SnippetForm'
 
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
+
 import api from '../api/axios'
 
 
 function AddSnippet() {
     const navigate = useNavigate()
-    const {accessToken} = useAuth()
+    
     // here snippetData came from the SnippetForm component. it is passed to onSubmit which is actually handlecreate.
     const handleCreate = async(snippetData)=>{
         try{
@@ -30,7 +30,7 @@ function AddSnippet() {
         it could anything else.
         the snippet form will also pass an object to the onSubmit which means to the handleCreate, it is used as 
         snippetData.*/}
-        <SnippetForm onSubmit = {handleCreate}/>
+        <SnippetForm onSubmit = {handleCreate} />
     </div>
     </>
   )

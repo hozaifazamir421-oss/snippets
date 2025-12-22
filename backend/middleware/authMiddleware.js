@@ -19,9 +19,7 @@ const verifyAccessToken = async(req, res, next)=>{
         if (!token) {
             return res.status(401).json({ message: "Access token missing" });
         }
-        // if(token){
-        //     console.log(`the token is recieved from header.`)
-        // }
+        
 
         //2)verifying the token
         const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET_KEY);

@@ -5,18 +5,37 @@ const asyncHandler = require("express-async-handler")
 const getSnippets =async(req,res)=>{
     try{
         const search = req.query.search
-        let query = {};
+        const user = req.user
 
-        if(search){
-            query = {
+        
+        const searchFilter = search? {
                 $or:[
                     {title: {$regex: search, $options: "i"}},
                     {description: {$regex: search, $options: "i"}},
                     {tags: {$in: [new RegExp(search, "i")]}},
                 ]
-            }
-        }
+            } : {};
 
+        let visibilityFilter = {}
+        if(user && user.role === "ADMIN"){
+            visibilityFilter = {}
+        } else if(user){
+            visibilityFilter = {
+                $or: [
+                    {visibility: "PUBLIC"},
+                    {createdBy: user.id}
+
+                ]
+            }
+        } else{
+            visibilityFilter = {visibility: "PUBLIC"}
+        }
+        
+        let query = {
+            $and: [
+                searchFilter,
+                visibilityFilter
+            ]}
         const snips = await Snippet.find(query).populate("createdBy", "username _id").sort({createdAt: -1})
         res.json(snips)
     }catch(error){
@@ -32,6 +51,21 @@ const getOneSnippet =asyncHandler(async(req,res)=>{
         return res.status(404).json({message: "Snippet not found."})
         // throw new Error("The snippet not found")
     }
+    if(snip.visibility  === "PUBLIC"){
+        return res.status(200).json(snip)
+    }
+
+    const user = req.user
+    if(!user){
+        console.log("user not exists")
+        return res.status(404).json({message: "Snippet not found!"})
+    }
+    const isOwner = snip.createdBy.toString() === user.id
+    const isAdmin = user.role === "ADMIN"
+    if(!isOwner && !isAdmin){
+        return res.status(404).json({message: "Snippet Not Found!"})
+    }
+
     res.status(200).json(snip)
 })
 
@@ -47,12 +81,12 @@ const getMySnippets = asyncHandler(async(req,res)=>{
 
 
 const createSnippet =asyncHandler(async(req,res)=>{
-    const {title, description, tags, code}= req.body
+    const {title, description, tags, code, visibility}= req.body
     if(!title || !code){
         return res.status(400).json({message: "Title and Code fields are required."})
         // throw new Error("Title and code fields are required")
     }
-    const newSnippet = await Snippet.create({title, description, tags, code,createdBy:req.user.id})
+    const newSnippet = await Snippet.create({title, description, tags, code, visibility, createdBy:req.user.id})
     res.status(201).json(newSnippet)
 })
 

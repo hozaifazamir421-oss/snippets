@@ -15,39 +15,12 @@ import AdminRoute from './components/AdminRoute'
 import AdminUsers from './pages/AdminUsers'
 
 
-const baseURL = import.meta.env.VITE_API_URL
-
-//this gets all the available snippets present in the database.
-const getAllSnippets = async()=>{
-  let allSnippets = []
-  try{await axios.get(`${baseURL}/snippets`).then(res=>{
-    allSnippets = res.data
-  })
-  
-  return allSnippets
-}catch(error){
-  console.error("Error loading snippets:", error);
-  throw new Error("Could not load snippets from the server.")
-  }
-}
-
-const getOneSnippet = async({params})=>{
-    try{
-      const res = await axios.get(`${baseURL}/snippets/${params.id}`)
-      return res.data;
-    }
-    catch(error){
-      console.log(`Error loading the snippet`, error);
-      throw new Error("Could not load snippet from the server")
-    }
-}
-
 
 const router = createBrowserRouter([
   {path: '/', element: <Layout/>, children:[
-    {index: true, path: '/', element: <Home/>, loader: getAllSnippets},
+    {index: true, path: '/', element: <Home/>},
     {path: '/addSnippet', element:(<ProtectedRoute><AddSnippet/> </ProtectedRoute>)},
-    {path: '/editSnippet/:id', element: <EditSnippet/>,loader: getOneSnippet},
+    {path: '/editSnippet/:id', element: <ProtectedRoute><EditSnippet/></ProtectedRoute>},
     {path: '/register', element: <Register/>},
     {path: '/login', element: <Login/>},
     {path: '/mySnippets', element:<ProtectedRoute><Mysnippets/></ProtectedRoute> },

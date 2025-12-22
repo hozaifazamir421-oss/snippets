@@ -5,7 +5,8 @@ function SnippetForm({onSubmit, initialData = {}}) {
     title: initialData.title|| "",
     description: initialData.description || "",
     code: initialData.code || "",
-    tags: initialData.tags? initialData.tags.join(", ") : ""
+    tags: initialData.tags? initialData.tags.join(", ") : "",
+    visibility: initialData.visibility? initialData.visibility : "PRIVATE"
 
   })
 
@@ -65,6 +66,17 @@ function SnippetForm({onSubmit, initialData = {}}) {
           onChange={handleChange}
           placeholder='eg. cpp, js, react'
           />
+      </div>
+      <div>
+        <label >Visibility</label>
+        <select 
+          name = "visibility"
+          value={formData.visibility}
+          onChange={handleChange}
+        >
+          <option value= "PUBLIC">Public</option>
+          <option value= "PRIVATE">Private</option>
+        </select>
       </div>
 
       <button type='submit'

@@ -12,6 +12,7 @@ function Snippets() {
     const [search, setSearch] = useState();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const {accessToken} = useAuth()
     
     
     const [snippets, setSnippets] = useState([]);
@@ -32,7 +33,7 @@ function Snippets() {
                 const res = await api.get(`/snippets`, { // Use the main GET /snippets route
                     params: search ? { search } : {}, // Axios automatically creates ?search=...
                 });
-                // console.log(res.data)
+                
                 setSnippets(res.data); 
             } catch (err) {
                 console.error("Error fetching filtered snippets:", err);
@@ -45,7 +46,7 @@ function Snippets() {
 
         return () => clearTimeout(delayDebounce);//if typed before 400ms,it will reset time to 400
 
-    }, [search]);
+    }, [search, accessToken]);
     
 
     
@@ -133,13 +134,19 @@ function Snippets() {
 
                                 <p>ID: {snippet._id}</p>
                                 <p>created by: {snippet.createdBy?.username}</p>
+                                
+                                <div>
                                 <button onClick={()=>{viewSnippet(snippet)}} className='btn'>View</button>
                                 
                                 
                                 {isAdmin && (<button onClick={() => { deleteSnippet(snippet._id) }} className='delete-btn'>delete</button>)}
+
+                                <span className={`visibility-badge ${snippet.visibility.toLowerCase()}`}>
+                                    {snippet.visibility}
+                                </span>
+                                </div>
                                 
-                                {/* {isOwner && (<><button onClick={()=>{editSnippet(snippet._id)}} className='btn'>edit</button>
-                                <button onClick={()=>{deleteSnippet(snippet._id)}} className='delete-btn'>delete</button></>)} */}
+                                
                                 
                                 
                             </div>

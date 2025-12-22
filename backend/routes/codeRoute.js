@@ -3,13 +3,14 @@ const { getSnippets, createSnippet, editSnippet, deleteSnippet, getOneSnippet, g
 const verifyAccessToken = require("../middleware/authMiddleware")
 const { authorize } = require("../middleware/athorize")
 const PERMISSIONS  = require("../middleware/permission")
+const optionalAuth = require("../middleware/optionalAuth")
 const router = express.Router()
 
 
 
-router.get('/', getSnippets)//to get all codes
+router.get('/',optionalAuth, getSnippets)//to get all codes
 router.get('/mine', verifyAccessToken, getMySnippets)
-router.get('/:id', getOneSnippet)//to get code by id
+router.get('/:id', optionalAuth, getOneSnippet)//to get code by id
 
 
 //protected routes
