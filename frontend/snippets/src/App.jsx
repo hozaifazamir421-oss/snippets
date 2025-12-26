@@ -13,6 +13,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import Mysnippets from './pages/Mysnippets'
 import AdminRoute from './components/AdminRoute'
 import AdminUsers from './pages/AdminUsers'
+import SavedSnippets from './pages/SavedSnippets'
 
 
 
@@ -24,7 +25,8 @@ const router = createBrowserRouter([
     {path: '/register', element: <Register/>},
     {path: '/login', element: <Login/>},
     {path: '/mySnippets', element:<ProtectedRoute><Mysnippets/></ProtectedRoute> },
-    {path: '/admin/users', element: <AdminRoute><AdminUsers/></AdminRoute>}
+    {path: '/admin/users', element: <AdminRoute><AdminUsers/></AdminRoute>},
+    {path: '/savedSnippets', element: <ProtectedRoute><SavedSnippets/></ProtectedRoute>}
   ]}
   
 ])

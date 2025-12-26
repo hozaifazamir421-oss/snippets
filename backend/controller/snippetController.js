@@ -1,149 +1,208 @@
 const { ROLETYPES } = require("../middleware/constants");
-const Snippet  = require("../modals/snippetSchema")
+const Snippet = require("../modals/snippetSchema")
 const asyncHandler = require("express-async-handler")
+const User = require('../modals/userSchema')
 
-const getSnippets =async(req,res)=>{
-    try{
+const getSnippets = async (req, res) => {
+    try {
         const search = req.query.search
         const user = req.user
 
-        
-        const searchFilter = search? {
-                $or:[
-                    {title: {$regex: search, $options: "i"}},
-                    {description: {$regex: search, $options: "i"}},
-                    {tags: {$in: [new RegExp(search, "i")]}},
-                ]
-            } : {};
+
+        const searchFilter = search ? {
+            $or: [
+                { title: { $regex: search, $options: "i" } },
+                { description: { $regex: search, $options: "i" } },
+                { tags: { $in: [new RegExp(search, "i")] } },
+            ]
+        } : {};
 
         let visibilityFilter = {}
-        if(user && user.role === "ADMIN"){
+        if (user && user.role === "ADMIN") {
             visibilityFilter = {}
-        } else if(user){
+        } else if (user) {
             visibilityFilter = {
                 $or: [
-                    {visibility: "PUBLIC"},
-                    {createdBy: user.id}
+                    { visibility: "PUBLIC" },
+                    { createdBy: user.id }
 
                 ]
             }
-        } else{
-            visibilityFilter = {visibility: "PUBLIC"}
+        } else {
+            visibilityFilter = { visibility: "PUBLIC" }
         }
-        
+
         let query = {
             $and: [
                 searchFilter,
                 visibilityFilter
-            ]}
-        const snips = await Snippet.find(query).populate("createdBy", "username _id").sort({createdAt: -1})
+            ]
+        }
+        const snips = await Snippet.find(query).populate("createdBy", "username _id").sort({ createdAt: -1 })
         res.json(snips)
-    }catch(error){
+    } catch (error) {
         console.log(`Error connecting DB: ${error.message}`)
-        return res.status(500).json({message:"server error", error: error.message})
+        return res.status(500).json({ message: "server error", error: error.message })
     }
 }
 
 
-const getOneSnippet =asyncHandler(async(req,res)=>{
+const getOneSnippet = asyncHandler(async (req, res) => {
     const snip = await Snippet.findById(req.params.id)
-    if(!snip){
-        return res.status(404).json({message: "Snippet not found."})
+    if (!snip) {
+        return res.status(404).json({ message: "Snippet not found." })
         // throw new Error("The snippet not found")
     }
-    if(snip.visibility  === "PUBLIC"){
+    if (snip.visibility === "PUBLIC") {
         return res.status(200).json(snip)
     }
 
     const user = req.user
-    if(!user){
+    if (!user) {
         console.log("user not exists")
-        return res.status(404).json({message: "Snippet not found!"})
+        return res.status(404).json({ message: "Snippet not found!" })
     }
     const isOwner = snip.createdBy.toString() === user.id
     const isAdmin = user.role === "ADMIN"
-    if(!isOwner && !isAdmin){
-        return res.status(404).json({message: "Snippet Not Found!"})
+    if (!isOwner && !isAdmin) {
+        return res.status(404).json({ message: "Snippet Not Found!" })
     }
 
     res.status(200).json(snip)
 })
 
-const getMySnippets = asyncHandler(async(req,res)=>{
-    
-        const UserId = req.user.id; //verifyaccesstoken(in authmiddleware.js) provides this user
-        const snippets = await Snippet.find({createdBy: UserId}).sort({createdAt: -1})
-        
-        res.status(200).json(snippets)
+const getMySnippets = asyncHandler(async (req, res) => {
 
-    
+    const UserId = req.user.id; //verifyaccesstoken(in authmiddleware.js) provides this user
+    const snippets = await Snippet.find({ createdBy: UserId }).sort({ createdAt: -1 })
+
+    res.status(200).json(snippets)
+
+
 })
 
 
-const createSnippet =asyncHandler(async(req,res)=>{
-    const {title, description, tags, code, visibility}= req.body
-    if(!title || !code){
-        return res.status(400).json({message: "Title and Code fields are required."})
+const createSnippet = asyncHandler(async (req, res) => {
+    const { title, description, tags, code, visibility } = req.body
+    if (!title || !code) {
+        return res.status(400).json({ message: "Title and Code fields are required." })
         // throw new Error("Title and code fields are required")
     }
-    const newSnippet = await Snippet.create({title, description, tags, code, visibility, createdBy:req.user.id})
+    const newSnippet = await Snippet.create({ title, description, tags, code, visibility, createdBy: req.user.id })
     res.status(201).json(newSnippet)
 })
 
 
-const editSnippet =asyncHandler(async(req,res)=>{
+const editSnippet = asyncHandler(async (req, res) => {
     const snippet = await Snippet.findById(req.params.id);
 
     if (!snippet) return res.status(404).json({ message: "Snippet not found" });
 
     //check ownership
     if (snippet.createdBy.toString() !== req.user.id) {
-      return res.status(403).json({ message: "Not authorized" });
+        return res.status(403).json({ message: "Not authorized" });
     }
-    
-    const updatedSnip = await Snippet.findByIdAndUpdate(req.params.id, req.body,{new:true} )
-    if(!updatedSnip){
-        return res.status(404).json({message:'snippet not found.'})
+
+    const updatedSnip = await Snippet.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    if (!updatedSnip) {
+        return res.status(404).json({ message: 'snippet not found.' })
         // throw new Error("snippet not found!!!")
     }
     res.status(200).json(updatedSnip)
 })
 
 
-const deleteSnippet =asyncHandler(async(req,res)=>{
+const deleteSnippet = asyncHandler(async (req, res) => {
     const snippet = await Snippet.findById(req.params.id);
 
     if (!snippet) return res.status(404).json({ message: "Snippet not found" });
 
     // check ownership
     if (snippet.createdBy.toString() !== req.user.id) {
-      return res.status(403).json({ message: "Not authorized" });
+        return res.status(403).json({ message: "Not authorized" });
     }
 
     let snip = await Snippet.findByIdAndDelete(req.params.id)
-    if(!snip){
-        return res.status(404).json({message: "Snippet not found."})
+    if (!snip) {
+        return res.status(404).json({ message: "Snippet not found." })
         // throw new Error("Snippet not found")
     }
+    
+    await User.updateMany(
+        {savedSnippets:snippet._id},
+        {$pull:{savedSnippets: snippet._id}}
+    )
 
-    res.status(200).json({message:"deleted snippet"})
+    res.status(200).json({ message: "deleted snippet" })
 })
 
-const adminDeleteSnippet = asyncHandler(async(req,res)=>{
-
-    const snip = await Snippet.findByIdAndDelete(req.params.id);
-    if(!snip){
-        return res.status(404).json({message: "Snippet not found"})
+const adminDeleteSnippet = asyncHandler(async (req, res) => {
+    const snippetId = req.params.id
+    const snip = await Snippet.findByIdAndDelete(snippetId);
+    if (!snip) {
+        return res.status(404).json({ message: "Snippet not found" })
     }
-    console.log("reached admin delete")
-    return res.status(200).json({message: "Snippet Deleted Successfully."})
+    
+    await User.updateMany(
+        {savedSnippets:snippetId},
+        {$pull:{savedSnippets: snippetId}}
+    )
+    
+    return res.status(200).json({ message: "Snippet Deleted Successfully." })
 })
 
-module.exports = { getSnippets,
-                    getOneSnippet,
-                    createSnippet,
-                    editSnippet,
-                    deleteSnippet,
-                    getMySnippets,
-                    adminDeleteSnippet,
-                }
+
+//---------------save snippets controller--------------------------
+
+const toggleSaveSnippet = asyncHandler(async (req, res) => {
+    const userId = req.user.id
+    const snippetId = req.params.id
+
+    const snippet = await Snippet.findById(snippetId)
+    if (!snippet) {
+        return res.status(403).json({ message: "Snippet Not Found." })
+    }
+
+    if (snippet.visibility === "PRIVATE" && snippet.createdBy.toString() !== userId) {
+        return res.status(403).json({ message: "Not authorized to save this snippet!" })
+    }
+
+    const user = await User.findById(userId).select("-password")
+    const alreadysaved = user.savedSnippets.includes(snippetId)
+    if (alreadysaved) {
+        user.savedSnippets.pull(snippetId)
+    } else {
+        user.savedSnippets.push(snippetId)
+    }
+
+    await user.save();
+    return res.status(200).json({
+        message: alreadysaved ? "Snippet unsaved" : "Snippet saved",
+        saved: !alreadysaved
+    })
+});
+
+const getSavedSnippets = asyncHandler(async (req, res) => {
+    const userId = req.user.id
+    const user = await User.findById(userId).populate({
+        path: "savedSnippets",
+        populate: {
+            path: "createdBy",
+            select: "username"
+        }
+    })
+    return res.status(200).json(user.savedSnippets)
+
+})
+
+module.exports = {
+    getSnippets,
+    getOneSnippet,
+    createSnippet,
+    editSnippet,
+    deleteSnippet,
+    getMySnippets,
+    adminDeleteSnippet,
+    toggleSaveSnippet,
+    getSavedSnippets
+}

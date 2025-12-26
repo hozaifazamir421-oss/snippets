@@ -27,6 +27,12 @@ const userSchema = new mongoose.Schema({
         enum: ['USER','ADMIN'],
         default: 'USER',
     },
+    savedSnippets:[
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Snippet"
+        }
+    ],
 }, {timestamps : true});
 
 

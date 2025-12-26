@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
+
 import './Snippets.css'
 import './buttons.css'
 
@@ -17,7 +18,7 @@ function Snippets() {
     
     const [snippets, setSnippets] = useState([]);
     const [selectedSnippet, setSelectedSnippet] = useState(null);
-    const {user} = useAuth()
+    const {user, setUser} = useAuth()
     const isAdmin = user && (user.role === "ADMIN")
     
     useEffect(() => {
@@ -71,6 +72,28 @@ function Snippets() {
     const closeModal = ()=>{
         setSelectedSnippet(null)
     }
+    //save handled================================================
+    
+    const handleSave = async(id)=>{
+        if(!user){
+            alert("Login to save snippet")
+            return
+        }
+        try {
+            const res = await api.post(`/snippets/save/${id}`)
+            const isAdded = res.data.saved
+            setUser(prevUser =>{
+                const currSaved = prevUser.savedSnippets || [];
+                if(isAdded){
+                    return {...prevUser, savedSnippets: [...currSaved, id]}
+                } else{
+                    return {...prevUser, savedSnippets: currSaved.filter(snippetId => snippetId !== id)}
+                }
+            })
+        } catch (error) {
+            console.error(error)
+        }
+    }
     
 
 
@@ -79,7 +102,7 @@ function Snippets() {
     <div className="snippets-container">
             <h1>All Snippets</h1>
             {/* Search Input */}
-                <input
+                <input 
                     type="text"
                     placeholder="Search snippets by title, tags, or description..."
                     value={search}
@@ -113,8 +136,8 @@ function Snippets() {
                     
                     // the yes path starts_-----------------------------
                     snippets.map((snippet) => {
-                        const isOwner = user && (snippet.createdBy === user.id || snippet.createdBy?._id === user.id);
-                                     
+                        // const isOwner = user && (snippet.createdBy === user.id || snippet.createdBy?._id === user.id);
+                        const isSaved = user && (user.savedSnippets.includes(snippet._id))     
                         return (
                             //card starts -----------------------------------------
                             <div className="snippet-card" key={snippet._id}>
@@ -134,17 +157,19 @@ function Snippets() {
 
                                 <p>ID: {snippet._id}</p>
                                 <p>created by: {snippet.createdBy?.username}</p>
+                                <span className={`visibility-badge ${snippet.visibility.toLowerCase()}`}>
+                                    {snippet.visibility}
+                                </span>
                                 
                                 <div>
                                 <button onClick={()=>{viewSnippet(snippet)}} className='btn'>View</button>
                                 
-                                
+                                <button className='btn' onClick={()=>{handleSave(snippet._id)}}>{isSaved? "Saved" : "Save"}</button>
                                 {isAdmin && (<button onClick={() => { deleteSnippet(snippet._id) }} className='delete-btn'>delete</button>)}
 
-                                <span className={`visibility-badge ${snippet.visibility.toLowerCase()}`}>
-                                    {snippet.visibility}
-                                </span>
+                                
                                 </div>
+                                
                                 
                                 
                                 

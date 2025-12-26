@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import {useForm} from 'react-hook-form'
-import './authcontainerstyle.css'
+import '../css/authcontainerstyle.css'
 
 function Login() {
     const {login} = useAuth()

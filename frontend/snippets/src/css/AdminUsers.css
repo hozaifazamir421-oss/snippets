@@ -4,6 +4,7 @@
   padding: 24px;
   align-items: center;
   text-align: center;
+  
 }
 
 .admin-container h2 {
@@ -16,14 +17,14 @@
 .admin-table {
   width: 100%;
   border-collapse: collapse;
-  background-color: #fff;
+  background-color: var(--color-surface);
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .admin-table thead {
-  background-color: #f4f6f8;
+  background-color: var(--color-surface);
 }
 
 .admin-table th,
@@ -35,13 +36,13 @@
 
 .admin-table th {
   font-weight: 600;
-  color: #333;
-  border-bottom: 1px solid #e0e0e0;
+  color: #ffffff;
+  border-bottom: 1px solid #e0e0e063;
 }
 
 .admin-table td {
-  color: #444;
-  border-bottom: 1px solid #f0f0f0;
+  color: #ffffff;
+  border-bottom: 1px solid #383434;
 }
 
 .admin-table tr:last-child td {
@@ -49,7 +50,7 @@
 }
 
 .admin-table tr:hover {
-  background-color: #fafafa;
+  background-color: #00000026
 }
 
 .admin-action-btn {

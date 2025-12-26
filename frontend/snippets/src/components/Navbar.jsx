@@ -123,6 +123,12 @@ function Navbar() {
               >
                 My snipppets
               </Link>
+              <Link
+                to = '/savedSnippets'
+                className={location.pathname === '/savedSnippets' ? 'active' : ''}
+              >
+                Saved Snippets
+              </Link>
               {isAdmin && (<> <Link
                 to ="/admin/users"
                 className={location.pathname === '/admin/users' ? 'active' : ''}

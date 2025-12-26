@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { useState } from 'react'
 import api from '../api/axios'
 import { useEffect } from 'react'
@@ -7,10 +8,7 @@ import ViewCodeModal from '../components/ViewCodeModal'
 import { useAuth } from '../context/AuthContext'
 import {useNavigate} from 'react-router-dom'
 
-
-
-
-function MySnippets() {
+function SavedSnippets() {
     const [snippet, setSnippets] = useState([])
     const [selectedSnippet, setSelectedSnippet] = useState(null)
     const navigate = useNavigate()
@@ -18,9 +16,9 @@ function MySnippets() {
    
 
     useEffect(() => {
-        const getmysnippets = async () => {
+        const getSavedSnippets = async () => {
             try {
-                const res = await api.get('/snippets/mine')
+                const res = await api.get('/snippets/saved/me')
                 setSnippets(res.data)
             }
             catch (error) {
@@ -29,27 +27,27 @@ function MySnippets() {
             }
 
         }
-        getmysnippets()
+        getSavedSnippets()
     }, [accessToken])
 
-    const editSnippet = (id) => {
-        navigate(`/editSnippet/${id}`)
-    }
+    // const editSnippet = (id) => {
+    //     navigate(`/editSnippet/${id}`)
+    // }
 
-    const deleteSnippet = async (id) => {
-        let confirm = window.confirm('Do you want to delete this item?')
-        if (!confirm) {
-            return
-        }
-        try {
-            await api.delete(`/snippets/${id}`).then((res) => { console.log(res) })
-            window.alert(`the Snippet is deleted successfully`)
-            setSnippets(prev => prev.filter(snippet => snippet._id !== id))
-        } catch (error) {
-            console.error('error deleting snippet', error)
-            alert(`Failed to delete.`)
-        }
-    }
+    // const deleteSnippet = async (id) => {
+    //     let confirm = window.confirm('Do you want to delete this item?')
+    //     if (!confirm) {
+    //         return
+    //     }
+    //     try {
+    //         await api.delete(`/snippets/${id}`).then((res) => { console.log(res) })
+    //         window.alert(`the Snippet is deleted successfully`)
+    //         setSnippets(prev => prev.filter(snippet => snippet._id !== id))
+    //     } catch (error) {
+    //         console.error('error deleting snippet', error)
+    //         alert(`Failed to delete.`)
+    //     }
+    // }
 
     const viewSnippet = (snippet) => {
         setSelectedSnippet(snippet)
@@ -59,7 +57,6 @@ function MySnippets() {
     }
 
     //save handled================================================
-    
     const handleSave = async(id)=>{
         if(!user){
             alert("Login to save snippet")
@@ -73,18 +70,17 @@ function MySnippets() {
                 if(isAdded){
                     return {...prevUser, savedSnippets: [...currSaved, id]}
                 } else{
-                    return {...prevUser, savedSnippets: currSaved.filter(sId => sId !== id)}
+                    return {...prevUser, savedSnippets: currSaved.filter(snippetId => snippetId !== id)}
                 }
             })
         } catch (error) {
             console.error(error)
         }
     }
-
-    return (
-        <>
-            <div className="snippets-container">
-                <h1>My Snippets</h1>
+  return (
+    <>
+    <div className="snippets-container">
+                <h1>Saved Snippets</h1>
 
                 <div className="snippet-list">
 
@@ -111,14 +107,15 @@ function MySnippets() {
                                     </div>
 
                                     <p>ID: {snippet._id}</p>
+                                    <p>created by: {snippet.createdBy?.username}</p>
                                     <span className={`visibility-badge ${snippet.visibility.toLowerCase()}`}>
                                     {snippet.visibility}
                                     </span>
                                     <div>
                                     <button onClick={() => { viewSnippet(snippet) }} className='btn'>View</button>
-                                    <button onClick={() => { editSnippet(snippet._id) }} className='btn'>edit</button>
-                                    <button className='btn' onClick={()=>{handleSave(snippet._id)}}>{isSaved? "Saved" : "Save"}</button>
-                                    <button onClick={() => { deleteSnippet(snippet._id) }} className='delete-btn'>delete</button>
+                                    
+                                    <button className='btn' onClick={()=>{handleSave(snippet._id)}}>{isSaved? "Unsave" : "Save"}</button>
+                                    
                                     
                                     </div>
 
@@ -138,8 +135,9 @@ function MySnippets() {
             {selectedSnippet &&
                 <ViewCodeModal
                     onClose={closeModal} snippet={selectedSnippet} />}
-        </>
-    )
+
+    </>
+  )
 }
 
-export default MySnippets
+export default SavedSnippets

@@ -1,5 +1,6 @@
 .snippet-form {
-  max-width: 700px;
+  max-width: 800px;
+  
   margin: 1rem auto;
   padding: 2rem;
   background-color: var(--color-surface); /* dark dev-friendly background */
@@ -51,7 +52,9 @@
 }
 
 .snippet-form button {
-  width: 100%;
+  display: block;
+  align-items: center;
+  width: 200px;
   padding: 0.75rem;
   background-color: #2563eb;
   color: #fff;

@@ -127,6 +127,7 @@ const loginUser = async(req,res)=>{
                 username: user.username,
                 email: user.email,
                 role: user.role,
+                savedSnippets: user.savedSnippets,
             },
         });
 
@@ -216,6 +217,7 @@ const refreshAccessToken = async(req,res)=>{
                 username: user.username,
                 id: user._id,
                 role: user.role,
+                savedSnippets: user.savedSnippets
             }
         })
         
