@@ -88,7 +88,7 @@ function SavedSnippets() {
 
                         // the yes path starts_-----------------------------
                         snippet.map((snippet) => {
-                            const isSaved = user && (user.savedSnippets.includes(snippet._id)) || false
+                            const isSaved = user && (user.savedSnippets?.includes(snippet._id)) || false
                             return (
                                 //card starts -----------------------------------------
                                 <div className="snippet-card" key={snippet._id}>
