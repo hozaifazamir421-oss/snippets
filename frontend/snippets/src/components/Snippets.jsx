@@ -137,7 +137,7 @@ function Snippets() {
                     // the yes path starts_-----------------------------
                     snippets.map((snippet) => {
                         // const isOwner = user && (snippet.createdBy === user.id || snippet.createdBy?._id === user.id);
-                        const isSaved = user && (user.savedSnippets.includes(snippet._id))     
+                        const isSaved = user && (user?.savedSnippets?.includes(snippet._id))     
                         return (
                             //card starts -----------------------------------------
                             <div className="snippet-card" key={snippet._id}>
